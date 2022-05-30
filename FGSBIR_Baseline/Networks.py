@@ -3,6 +3,7 @@ import torchvision.models as backbone_
 import torch.nn.functional as F
 from torchvision.ops import MultiScaleRoIAlign
 from collections import OrderedDict
+from torchvision.models import ResNet50_Weights, VGG16_Weights, Inception_V3_Weights
 import torch
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -11,7 +12,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class Resnet50_Network(nn.Module):
     def __init__(self, hp):
         super(Resnet50_Network, self).__init__()
-        backbone = backbone_.resnet50(pretrained=True) #resnet50, resnet18, resnet34
+        backbone = backbone_.resnet50(weights=ResNet50_Weights.DEFAULT) #resnet50, resnet18, resnet34
 
         self.features = nn.Sequential()
         for name, module in backbone.named_children():
@@ -30,7 +31,7 @@ class Resnet50_Network(nn.Module):
 class VGG_Network(nn.Module):
     def __init__(self, hp):
         super(VGG_Network, self).__init__()
-        self.backbone = backbone_.vgg16(pretrained=True).features
+        self.backbone = backbone_.vgg16(weights=VGG16_Weights.DEFAULT).features
         self.pool_method =  nn.AdaptiveMaxPool2d(1)
 
     def forward(self, input, bb_box = None):
@@ -41,7 +42,7 @@ class VGG_Network(nn.Module):
 class InceptionV3_Network(nn.Module):
     def __init__(self, hp):
         super(InceptionV3_Network, self).__init__()
-        backbone = backbone_.inception_v3(pretrained=True)
+        backbone = backbone_.inception_v3(weights=Inception_V3_Weights.DEFAULT)
 
         ## Extract Inception Layers ##
         self.Conv2d_1a_3x3 = backbone.Conv2d_1a_3x3

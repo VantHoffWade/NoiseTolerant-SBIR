@@ -11,7 +11,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Fine-Grained SBIR Model')
 
     parser.add_argument('--base_dir', type=str, default=os.getcwd())
-    parser.add_argument('--saved_models', type=str, default='./models', help='Saved models directory')
+    parser.add_argument('--saved_models', type=str, default=r'../models', help='Saved models directory')
 
     parser.add_argument('--dataset_name', type=str, default='ShoeV2')
     parser.add_argument('--backbone_name', type=str, default='VGG', help='VGG / InceptionV3/ Resnet50')
